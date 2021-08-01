@@ -13,10 +13,26 @@ const btnNew = document.querySelector('.btn--new');
 const btnHold = document.querySelector('.btn--hold');
 const btnRoll = document.querySelector('.btn--roll');
 
-const scores = [0, 0];
-let currentScore = 0;
-let activePlayer = 0; // 0 is first player 1 is second player
-let playing = true;
+let scores,currentScore,activePlayer,playing  ;
+
+//starting conditions
+const init = function() {
+  scores = [0, 0];
+  currentScore = 0;
+  activePlayer = 0; // 0 is first player 1 is second player
+  playing = true;
+
+  firstScoreEl.textContent = 0;
+  secondScoreEl.textContent = 0;
+  firstCurrentEl.textContent = 0;
+  secondCurrentEl.textContent = 0;
+
+  diceEl.classList.add('hidden');
+  firstPLayerEl.classList.remove(`player--winner`);
+  secondPLayerEl.classList.remove(`player--winner`);
+  firstPLayerEl.classList.add(`player--active`);
+  secondPLayerEl.classList.remove(`player--active`);
+}
 
 const switchPlayer = function() {
   currentScore = 0;
@@ -27,10 +43,7 @@ const switchPlayer = function() {
   secondPLayerEl.classList.toggle(`player--active`);
 };
 
-//starting conditions
-firstScoreEl.textContent = 0;
-secondScoreEl.textContent = 0;
-diceEl.classList.add('hidden');
+init();
 
 //Rolling dice func
 btnRoll.addEventListener('click',function() {
@@ -65,7 +78,7 @@ btnHold.addEventListener(`click`,function() {
     document.getElementById(`score--${activePlayer}`).textContent = scores[activePlayer];
 
     //2. check if player's score is >= 100
-    if (scores[activePlayer] >= 10) {
+    if (scores[activePlayer] >= 100) {
       //finnish the Game
       playing = false;
       document.querySelector(`.player--${activePlayer}`).classList.add(`player--winner`);
@@ -77,3 +90,5 @@ btnHold.addEventListener(`click`,function() {
 
   }
 });
+
+btnNew.addEventListener('click',init);
